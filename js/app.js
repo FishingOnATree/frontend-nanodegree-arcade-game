@@ -1,32 +1,60 @@
+const grid ={
+    width: 101,
+    height: 83,
+    row_min: 0,
+    row_max: 5,
+    col_min: 0,
+    col_max: 4
+};
+
 // Enemies our player must avoid
 class Char{
-    constructor(imageURL) {
+    constructor(imageURL, initX, initY) {
         this.sprite = imageURL;
+        this.x = initX;
+        this.y = initY;
     }
 
     render() {
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        ctx.drawImage(Resources.get(this.sprite), this.x*grid.width, this.y*grid.height);
     }
 };
 
 class Enemy extends Char{
     constructor() {
-        super('images/enemy-bug.png');
+        super('images/enemy-bug.png', 0, 3);
     }
 
     update(dt) {
-        console.log("enemy.update");
+        //console.log("enemy.update");
     }
 };
 
 class Player extends Char{
     constructor() {
-        super('images/char-boy.png');
+        super('images/char-boy.png', 2, 5);
     }
     update(dt) {
-        console.log("player.update");
+
     }
     handleInput(keycode) {
+        if (keycode == 'left') {
+            if (this.x > grid.col_min) {
+                this.x--;
+            }
+        } else if (keycode == 'right') {
+            if (this.x < grid.col_max) {
+                this.x++;
+            }
+        } else if (keycode == 'up') {
+            if (this.y > grid.row_min) {
+                this.y--;
+            }
+        } else {
+            if (this.y < grid.row_max) {
+                this.y++;
+            }
+        }
         console.log(keycode);
     }
 }
