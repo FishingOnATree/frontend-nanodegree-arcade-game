@@ -1,4 +1,36 @@
 // Enemies our player must avoid
+class Char{
+    constructor(imageURL) {
+        this.sprite = imageURL;
+    }
+
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+};
+
+class Enemy extends Char{
+    constructor() {
+        super('images/enemy-bug.png');
+    }
+
+    update(dt) {
+        console.log("enemy.update");
+    }
+};
+
+class Player extends Char{
+    constructor() {
+        super('images/char-boy.png');
+    }
+    update(dt) {
+        console.log("player.update");
+    }
+    handleInput(keycode) {
+        console.log(keycode);
+    }
+}
+/*
 var Char = function(imageURL) {
     this.sprite = imageURL;
 };
@@ -44,6 +76,7 @@ Player.prototype.update = function(dt) {
 Player.prototype.handleInput = function(keycode) {
     console.log(keycode);
 };
+*/
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
