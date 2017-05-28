@@ -19,15 +19,18 @@ var Engine = (function(global) {
      * create the canvas element, grab the 2D context for that canvas
      * set the canvas elements height/width and add it to the DOM.
      */
-    var doc = global.document,
-        win = global.window,
-        canvas = doc.createElement('canvas'),
+    var doc = document.getElementById('game');
+    console.log(doc);
+    var win = global.window,
+        canvas = document.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
 
     canvas.width = 505;
     canvas.height = 606;
-    doc.body.appendChild(canvas);
+    canvas.id = 'game-canvas';
+    //doc.body.appendChild(canvas);
+    doc.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itsel
      * and handles properly calling the update and render methods.
@@ -80,7 +83,21 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollision();
+    }
+
+    function checkCollision() {
+        if (player.y == grid.row_min) {
+            alert("You Win!");
+            reset();
+        } else {
+            allEnemies.forEach(function(enemy) {
+                if (enemy.y == player.y && enemy.x+0.5 >= player.x && enemy.x-0.5 <= player.x) {
+                    alert("You Lose!");
+                    reset();
+                }
+            });
+        }
     }
 
     /* This is called by the update function and loops through all of the
@@ -160,6 +177,8 @@ var Engine = (function(global) {
      */
     function reset() {
         // noop
+        player.x = playerInitPos.x;
+        player.y = playerInitPos.y;
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -171,7 +190,10 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png'
     ]);
     Resources.onReady(init);
 

@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Effective JavaScript: Frogger</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                Character selction:
+                <select id="charselect" onchange="updateCharacter()">
+                    <option value="images/char-boy.png">Boy</option>
+                    <option value="images/char-cat-girl.png">Cat girl</option>
+                    <option value="images/char-horn-girl.png">Horn girl</option>
+                    <option value="images/char-pink-girl.png">Pink girl</option>
+                </select>
+            </div>
+            <div id="game" class="col-md-12 text-center">
+            </div>
+        </div>
+    </div>
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
-    <div class="char-select">
-        <select>
-            <option value="images/char-boy.png">Boy</option>
-            <option value="images/char-cat-girl.png">Cat girl</option>
-            <option value="images/char-horn-girl.png">Horn girl</option>
-            <option value="images/char-pink-girl.png">Pink girl</option>
-        </select>
-    </div>
 </body>
 </html>

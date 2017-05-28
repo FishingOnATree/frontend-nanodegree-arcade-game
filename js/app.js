@@ -7,7 +7,10 @@ const grid ={
     col_min: 0,
     col_max: 4
 };
-
+const playerInitPos = {
+    x: 2,
+    y: 5
+};
 // Enemies our player must avoid
 class Char{
     constructor(imageURL, initX, initY) {
@@ -16,15 +19,19 @@ class Char{
         this.y = initY;
     }
 
+    updateImage(imageURL) {
+        this.sprite = imageURL;
+    }
+
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x*grid.width, this.y*grid.height);
     }
 };
 
 class Enemy extends Char{
-    constructor() {
-        super('images/enemy-bug.png', 0, 3);
-        this.speed = 0.5;
+    constructor(x, y, speed) {
+        super('images/enemy-bug.png', x, y);
+        this.speed = speed;
     }
 
     update(dt) {
@@ -34,14 +41,9 @@ class Enemy extends Char{
 
 class Player extends Char{
     constructor() {
-        super('images/char-boy.png', 2, 5);
+        super('images/char-boy.png', playerInitPos.x, playerInitPos.y);
     }
     update(dt) {
-        if (this.y == grid.row_min) {
-            alert("You Win!");
-            this.x = 2;
-            this.y = 5;
-        }
     }
     handleInput(keycode) {
         if (keycode == 'left') {
@@ -115,7 +117,11 @@ Player.prototype.handleInput = function(keycode) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 var allEnemies = [];
-allEnemies.push(new Enemy());
+for (count=0; count < 3; count++) {
+    var speed = Math.random() * 2 + 0.5;
+    var x = Math.random() * grid.col_count;
+    allEnemies.push(new Enemy(x, count + 1, speed));
+}
 var player = new Player();
 
 
@@ -131,3 +137,10 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+updateCharacter = function() {
+    var doc = document.getElementById("charselect");
+    console.log(doc.options[doc.selectedIndex].value);
+    player.updateImage(doc.options[doc.selectedIndex].value);
+    doc.blur();
+}
