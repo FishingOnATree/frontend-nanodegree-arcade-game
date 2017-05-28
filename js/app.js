@@ -3,6 +3,7 @@ const grid ={
     height: 83,
     row_min: 0,
     row_max: 5,
+    col_count: 5,
     col_min: 0,
     col_max: 4
 };
@@ -23,10 +24,11 @@ class Char{
 class Enemy extends Char{
     constructor() {
         super('images/enemy-bug.png', 0, 3);
+        this.speed = 0.5;
     }
 
     update(dt) {
-        //console.log("enemy.update");
+        this.x = (this.x + this.speed * dt) % grid.col_count;
     }
 };
 
@@ -35,7 +37,11 @@ class Player extends Char{
         super('images/char-boy.png', 2, 5);
     }
     update(dt) {
-
+        if (this.y == grid.row_min) {
+            alert("You Win!");
+            this.x = 2;
+            this.y = 5;
+        }
     }
     handleInput(keycode) {
         if (keycode == 'left') {
